@@ -1,0 +1,8 @@
+---
+## [curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose]
+- name: "Installing docker-compose-1.24.0"
+  get_url:
+       url: "https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-Linux-x86_64"
+       dest: "{{ docker_compose_path }}"
+       mode: '0755'
+

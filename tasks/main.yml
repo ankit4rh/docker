@@ -1,0 +1,55 @@
+---
+# tasks file for docker
+## PlaybookDescription 
+#  1. Insatll docker
+#  2. adds ubuntu to docker group
+#  3. Install docker-compose
+
+
+     ##  [  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -  ]
+   - name: "Add Docker’s official GPG key" 
+     apt_key: 
+       url: "https://download.docker.com/linux/ubuntu/gpg"
+       state: present
+
+     ##  [  sudo apt-key fingerprint 0EBFCD88  ]
+   - name: "Verify that we have the key with the fingerprint"
+     apt_key:
+       id: 0EBFCD88
+       state: present
+
+
+
+     ##  [  sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"  ]
+   - name: "Adding docker apt stable repository"
+     apt_repository:
+       repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ansible_distribution_release}} stable"
+       state: present
+
+
+
+   - name: "Installing Docker with Dependencies"
+     apt: 
+       name: ['apt-transport-https','ca-certificates','curl','gnupg-agent','software-properties-common','docker-ce']
+       state: present
+       update_cache: yes
+
+
+
+   - name: "Starting and Enabling the docker service"
+     service:
+       name: "docker"
+       state: started
+       enabled: yes
+
+
+
+
+   - name: ""
+     include_tasks: docker-compose.yml
+   
+
+   - name: ""
+     include_tasks: docker-users.yml
+#       when: docker_users | length > 0
+

@@ -1,0 +1,11 @@
+---
+#replace with_items with loop its going to be obsolete in future version of ansible
+
+##  [ sudo usermod -aG docker ubuntu  ]
+- name: Ensure docker users are added to the docker group.
+  user:
+    name: "{{ item }}"
+    groups: docker
+    append: true
+  with_items: "{{ docker_users }}"
+
