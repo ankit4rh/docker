@@ -7,9 +7,16 @@ A brief description of the role goes here.
 Example Playbook
 ----------------
 ```yaml
+
 - hosts: all
   roles:
-    - ankit4rh.docker
+
+   - role: "ankit4rh.docker"
+     vars:
+      - docker_compose_version: "1.24.1"
+      - docker_users:
+          - "ubuntu"
+          - "root"
 
 
 License
